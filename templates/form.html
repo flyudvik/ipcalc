@@ -1,4 +1,4 @@
-{% macro network_form(network, sizes) %}
+{% macro network_form(network='192.168.0.0/24', sizes='[125, 30, 30]') %}
     <form action="/" method="get" class="form-horizontal">
         <div class="form-group">
             <label for="network" class="col-sm-2 control-label">Network</label>

@@ -41,19 +41,11 @@
 <body>
 <div id="content" class="container-fluid">
     <h1>
-        IP calculator
+        {% block header %}IP calculator {% endblock %}
     </h1>
 
     <div class="row">
         <div class="col-md-12">
-            <div class="alert alert-info">
-                {% block alert %}{% endblock %}
-            </div>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-6">
             <div class="panel panel-default">
                 <div class="panel-body">
                     <h2>Ввод необходимой информации</h2>
@@ -62,35 +54,37 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-6">
-            <div class="panel panel-default">
-                <div class="panel-body">
-                    {% block network_info %}
-                    {% endblock %}
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            {% block alert %}
+                <div class="alert alert-info">
+
                 </div>
-            </div>
+            {% endblock %}
         </div>
     </div>
-    {% block content %}
-        <div class="row">
-            <div class="col-md-12">
-                {% block required_info %}
-                {% endblock %}
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                {% block inital_table %}
 
-                {% endblock %}
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                {% block reduced_table %}
-                {% endblock %}
-            </div>
-        </div>
+    {% block content %}
+        {#        <div class="row">#}
+        {#            <div class="col-md-12">#}
+        {#                <div class="panel panel-default">#}
+        {#                    <div class="panel-body">#}
+        {#                        {% block inital_table %}{% endblock %}#}
+        {#                    </div>#}
+        {#                </div>#}
+        {#            </div>#}
+        {#        </div>#}
+        {#        <div class="row">#}
+        {#            <div class="col-md-12">#}
+        {#                <div class="panel panel-default">#}
+        {#                    <div class="panel-body">#}
+        {#                       {% block reduced_table %}{% endblock %}#}
+        {#                    </div>#}
+        {#                </div>#}
+        {#            </div>#}
+        {#        </div>#}
     {% endblock %}
 </div>
 </body>

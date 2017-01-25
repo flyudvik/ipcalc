@@ -1,91 +1,13 @@
-{% extends 'base.html' %}
+{% extends 'subnetting.html' %}
 {% import 'form.html' as my_form %}
 
 {% block form %}
-{{ my_form.network_form(context.network, context.sizes) }}
+    {{ my_form.network_form() }}
 {% endblock %}
-{% if context.empty %}
-    {% block alert %}
-        {{ context.empty }}
+
+{% block alert %}
+    <div class="alert alert-info">
         To continue enter some information in the form above
-    {% endblock %}
-{% endif %}
-
-{% if not context.empty %}
-    {% block network_info %}
-        <div id="network-info" class="table-responsive">
-            <h2>Информация об исходной сети</h2>
-            <table class="table table-bordered table-striped .table-condensed">
-                <tr>
-                    <th class="">Исходная сеть</th>
-                    <td>{{ context.network.compressed }}</td>
-                </tr>
-                <tr>
-                    <th>Количество доступных адресов</th>
-                    <td>{{ context.network.num_addresses - 2}}</td>
-                </tr>
-                <tr>
-                    <th>Количество необходимых адресов</th>
-                    <td>{{ context.required_num_addresses  - 2}}</td>
-                </tr>
-                <tr>
-                    <th>Количество свободных адресов</th>
-                    <td>{{ context.network.num_addresses - context.required_num_addresses - 2}}</td>
-                </tr>
-            </table>
-        </div>
-    {% endblock %}
-
-    {% block required_info %}
-        <div id="hosts">
-            <h2>Информация о выделенных IP-адресов</h2>
-            <table class="table table-bordered table-striped table-hover">
-                <tr class="success">
-                    <th>Размер</th>
-                    <th>Выделенный размер</th>
-                    <th>Адрес</th>
-                    <th>Маска</th>
-                    <th>Десятичная маска</th>
-                    <th>Бродкаст</th>
-                    <th>Диапазон адресов</th>
-                </tr>
-                {% for size, network in context.hosts %}
-                    <tr>
-                        <td>{{ size }}</td>
-                        <td>{{ network.num_addresses - 2 }}</td>
-                        <td>{{ network.network_address }}</td>
-                        <td>{{ network.prefixlen }}</td>
-                        <td>{{ network.netmask }}</td>
-                        <td>{{ network.broadcast_address }}</td>
-                        <td>{{ network.network_address }} - {{ network.broadcast_address }}</td>
-                    </tr>
-                {% endfor %}
-            </table>
-        </div>
-    {% endblock %}
-
-    {% block inital_table %}
-        <div id="initial-table">
-
-            <div class="panel panel-default">
-                <div class="panel-body">
-                    <h2>Таблица подсетей</h2>
-                    {{ context.initial_table | safe }}
-
-                </div>
-            </div>
-        </div>
-    {% endblock %}
-
-    {% block reduced_table %}
-        <div id="reduced-table">
-            <div class="panel panel-default">
-                <div class="panel-body">
-                    <h2>Таблица свободных подсетей</h2>
-                    {{ context.reduced_table | safe }}
-
-                </div>
-            </div>
-        </div>
-    {% endblock %}
-{% endif %}
+    </div>
+{% endblock %}
+{% block content %}{% endblock %}

@@ -105,3 +105,7 @@ def display_horizontal_table_div(data):
 
 def get_hosts_with_interface(sizes):
     return sizes
+
+
+def count_dedicated_ip(networks):
+    return sum(map(lambda x: x[1].num_addresses, networks))
