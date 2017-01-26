@@ -1,5 +1,7 @@
 import ipaddress
 
+from exceptions import *
+
 
 def string_2_network(string: str):
     return ipaddress.ip_network(string)
@@ -7,9 +9,9 @@ def string_2_network(string: str):
 
 def get_subnets_plain(network, **kwargs):
     if network.num_addresses == 1:
-        raise ValueError('One available address')
+        raise WrongNetworkException('One available address')
     if network.num_addresses <= kwargs.get('min', 4):
-        raise ValueError('Expect to have bigger network or make minimum reqired hosts less')
+        raise WrongNetworkException('Expect to have bigger network or make minimum reqired hosts less')
     res = {}
     stack = [network]
     while len(stack):
@@ -36,12 +38,12 @@ def reduce_subnets(new_subnets):
 
 def extract_for_hosts(hosts: list, subnets: dict) -> (list, dict):
     if not hosts:
-        raise ValueError("Hosts list should contain "
+        raise WrongNumberOfHosts("Hosts list should contain "
                          "at least 1 required network of hosts")
     if not subnets:
-        raise ValueError("Subnets should be at least contain one network key")
+        raise WrongNetworkException("Subnets should be at least contain one network key")
     if sum(map(close_to_power_two, hosts)) > max(subnets.keys()):
-        raise ValueError("sum of the required hosts "
+        raise WrongNumberOfHosts("sum of the required hosts "
                          "should be less than "
                          "maximal possible number"
                          " of host for this network")
