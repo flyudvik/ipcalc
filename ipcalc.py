@@ -13,6 +13,26 @@ cache = SimpleCache()
 
 
 @app.route('/', methods=['GET'])
+def ipcalc():
+    network = request.args.get('network')
+    sizes_str = request.args.get('size')
+    if not network or not sizes_str:
+        return render_template("index.html")
+    get_hash = hash(network + sizes_str)
+    context = cache.get(get_hash)
+    if not context:
+        context = {}
+        sizes = json.loads(sizes_str)
+        context['network'] = utils.string_2_network(network)
+        context['sizes'] = sizes
+        subnets = utils.extract_for_network(utils.string_2_network(network), sizes)
+        context['networks'] = zip(reversed(sorted(sizes)), subnets)
+        context['dedicated'] = sum(map(lambda x: x.num_addresses, subnets))
+        cache.set(get_hash, context, timeout=5 * 60)
+    return render_template('result_2.html', context=context)
+
+
+@app.route('/deprecated', methods=['GET'])
 def hello_world():
     network = request.args.get('network')
     sizes_str = request.args.get('size')

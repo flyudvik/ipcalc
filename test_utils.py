@@ -85,3 +85,10 @@ class TestGetSubnetsPlain(unittest.TestCase):
         with self.assertRaises(AttributeError):
             utils.get_subnets_plain([])
 
+
+class TestExtractForNetwork(unittest.TestCase):
+    def test_success(self):
+        network = ipaddress.IPv4Network('192.168.0.0/24')
+        required_hosts = [126, 2, 2, 2, 2, 30, 28]
+        result = utils.extract_for_network(network, required_hosts)
+        self.assertEqual(len(result), len(required_hosts))
