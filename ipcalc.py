@@ -1,4 +1,5 @@
 from flask import Flask, json, render_template, request
+from flask import flash
 from werkzeug.contrib.cache import SimpleCache
 
 
@@ -16,21 +17,27 @@ cache = SimpleCache()
 def ipcalc():
     network = request.args.get('network')
     sizes_str = request.args.get('size')
+    sizes = json.loads(sizes_str)
     if not network or not sizes_str:
         return render_template("index.html")
-    get_hash = hash(network + sizes_str)
-    context = cache.get(get_hash)
-    if not context:
-        context = {}
-        sizes = json.loads(sizes_str)
-        context['network'] = utils.string_2_network(network)
-        context['sizes'] = sizes
-        subnets = utils.extract_for_network(utils.string_2_network(network), sizes)
-        context['networks'] = zip(reversed(sorted(sizes)), subnets)
-        context['dedicated'] = sum(map(lambda x: x.num_addresses, subnets))
-        cache.set(get_hash, context, timeout=5 * 60)
-    return render_template('result_2.html', context=context)
-
+    try:
+        get_hash = hash(network + sizes_str)
+        context = cache.get(get_hash)
+        if not context:
+            context = {}
+            context['network'] = utils.string_2_network(network)
+            context['sizes'] = sizes
+            subnets = utils.extract_for_network(utils.string_2_network(network), sizes)
+            context['networks'] = zip(reversed(sorted(sizes)), subnets)
+            context['dedicated'] = sum(map(lambda x: x.num_addresses, subnets))
+            cache.set(get_hash, context, timeout=5 * 60)
+        return render_template('result_2.html', context=context)
+    except Exception as e:
+        flash(str(e), 'error')
+        return render_template("index.html", context={
+            'network': network,
+            'sizes': sizes
+        })
 
 @app.route('/deprecated', methods=['GET'])
 def hello_world():
@@ -61,5 +68,6 @@ def hello_world():
         return render_template("error.html", exception=e)
 
 
+app.secret_key = 'kjsdhflkjshflskjdfhlksdfhbvlksefvouhoue,flaedkfhdskf'
 if __name__ == '__main__':
     app.run()
