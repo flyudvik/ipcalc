@@ -18,4 +18,18 @@
         </div>
     </div>
 </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <h2>Граф распределения сети</h2>
+                    <div id="chart"></div>
+                    {% include "simple_chart.html" %}
+                    <script>
+                        new Treant( network_chart_config );
+                    </script>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

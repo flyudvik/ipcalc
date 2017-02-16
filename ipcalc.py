@@ -2,7 +2,7 @@ from flask import Flask, json, render_template, request
 from flask import flash
 from werkzeug.contrib.cache import SimpleCache
 
-
+import exceptions
 import utils
 from exceptions import *
 
@@ -17,9 +17,9 @@ cache = SimpleCache()
 def ipcalc():
     network = request.args.get('network')
     sizes_str = request.args.get('size')
-    sizes = json.loads(sizes_str)
     if not network or not sizes_str:
         return render_template("index.html")
+    sizes = json.loads(sizes_str)
     try:
         get_hash = hash(network + sizes_str)
         context = cache.get(get_hash)
@@ -30,6 +30,11 @@ def ipcalc():
             subnets = utils.extract_for_network(utils.string_2_network(network), sizes)
             context['networks'] = zip(reversed(sorted(sizes)), subnets)
             context['dedicated'] = sum(map(lambda x: x.num_addresses, subnets))
+            context['chart'] = json.dumps(
+                utils.create_graph_of_network_relations(
+                    subnets, context['network']
+                )
+            )
             cache.set(get_hash, context, timeout=5 * 60)
         return render_template('result_2.html', context=context)
     except Exception as e:
@@ -39,6 +44,8 @@ def ipcalc():
             'sizes': sizes
         })
 
+
+@exceptions.deprecated
 @app.route('/deprecated', methods=['GET'])
 def hello_world():
     network = request.args.get('network')

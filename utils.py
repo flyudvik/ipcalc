@@ -7,6 +7,7 @@ def string_2_network(string: str):
     return ipaddress.ip_network(string)
 
 
+@deprecated
 def get_subnets_plain(network, **kwargs):
     if network.num_addresses == 1:
         raise WrongNetworkException('One available address')
@@ -36,6 +37,7 @@ def reduce_subnets(new_subnets):
     return res
 
 
+@deprecated
 def extract_for_hosts(hosts: list, subnets: dict) -> (list, dict):
     if not hosts:
         raise WrongNumberOfHosts("Hosts list should contain "
@@ -80,6 +82,7 @@ def get_max_summary_height(data):
     return max_key_sum
 
 
+@deprecated
 def display_horizontal_table_div(data):
     body = """<div class="_table">"""
     height = max(data.keys()) // min(data.keys())
@@ -142,3 +145,53 @@ def extract_for_network(network, required_hosts: list) -> list:
         elif subnet.num_addresses > close_to_power_two(item_to_pull):
             stack.extend(list(reversed(list(subnet.subnets()))))
     return result
+
+
+def create_matrix_network_graph(subnets):
+    matrix = [[0 for _ in subnets] for _ in subnets]
+    r = sorted(subnets)
+
+    for i, network in enumerate(r):
+        for j, subnet_2 in enumerate(r):
+            if subnet_2 in network.subnets():
+                matrix[i][j] = 1
+
+    return matrix
+
+
+def _check_network(network, set_of_networks):
+    for n in set_of_networks:
+        if n == network:
+            return True
+    if network > max(set_of_networks):
+        return True
+    return False
+
+
+def _network_has_nodes(network, set_of_networks):
+    for n in set_of_networks:
+        if n == network:
+            return False
+    return True
+
+
+def create_graph_of_network_relations(result, network):
+    if _check_network(network, result):
+        if _network_has_nodes(network, result):
+            return None
+        return {
+            'text': {
+                'name': network.compressed
+            }
+        }
+    subnets = []
+    for subnet in network.subnets():
+        s = create_graph_of_network_relations(result, subnet)
+        if s is not None:
+            subnets.append(s)
+    return {
+        'text': {
+            "name": network.compressed,
+        },
+        'children': subnets,
+    }
