@@ -36,7 +36,7 @@ def ipcalc():
                 )
             )
             cache.set(get_hash, context, timeout=5 * 60)
-        return render_template('result_2.html', context=context)
+        return render_template('result.html', context=context)
     except Exception as e:
         flash(str(e), 'error')
         return render_template("index.html", context={

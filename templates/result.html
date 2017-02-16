@@ -8,8 +8,9 @@
 {% block alert %}{% endblock %}
 
 {% block network_info %}
+    <h2>Информация об исходной сети</h2>
+
     <div id="network-info" class="table-responsive">
-        <h2>Информация об исходной сети</h2>
         <table class="table table-bordered table-striped .table-condensed">
             <tr>
                 <th class="">Cеть</th>
@@ -36,8 +37,9 @@
 {% endblock %}
 
 {% block required_info %}
-    <div id="hosts">
-        <h2>Информация о выделенных IP-адресов</h2>
+    <h2>Информация о выделенных IP-адресов</h2>
+
+    <div id="hosts" class="table-responsive">
         <table class="table table-bordered table-striped table-hover">
             <tr class="success">
                 <th>Размер</th>
@@ -62,13 +64,3 @@
         </table>
     </div>
 {% endblock %}
-
-{#{% block inital_table %}#}
-{#    <h2>Таблица подсетей</h2>#}
-{#    {{ context.initial_table | safe }}#}
-{#{% endblock %}#}
-{##}
-{#{% block reduced_table %}#}
-{#    <h2>Таблица свободных подсетей</h2>#}
-{#    {{ context.reduced_table | safe }}#}
-{#{% endblock %}#}
