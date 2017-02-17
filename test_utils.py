@@ -39,5 +39,8 @@ class TestExtractForNetwork(unittest.TestCase):
 
         graph = utils.create_graph_of_network_relations(result, top_network)
 
-        pprint(graph)
+        network_for_125 = list(top_network.subnets())[0]
+
         self.assertEqual(type(graph), dict)
+        self.assertEqual(graph['text']['name'], top_network.compressed)
+        self.assertEqual(graph['children'][0]['text']['name'], network_for_125.compressed)
