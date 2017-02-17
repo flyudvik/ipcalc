@@ -24,17 +24,7 @@ def ipcalc():
         get_hash = hash(network + sizes_str)
         context = cache.get(get_hash)
         if not context:
-            context = {}
-            context['network'] = utils.string_2_network(network)
-            context['sizes'] = sizes
-            subnets = utils.extract_for_network(utils.string_2_network(network), sizes)
-            context['networks'] = zip(reversed(sorted(sizes)), subnets)
-            context['dedicated'] = sum(map(lambda x: x.num_addresses, subnets))
-            context['chart'] = json.dumps(
-                utils.create_graph_of_network_relations(
-                    subnets, context['network']
-                )
-            )
+            context = utils.ip_calculator(network, sizes)
             cache.set(get_hash, context, timeout=5 * 60)
         return render_template('result.html', context=context)
     except Exception as e:
