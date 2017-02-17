@@ -11,26 +11,35 @@
     <h2>Информация об исходной сети</h2>
 
     <div id="network-info" class="table-responsive">
-        <table class="table table-bordered table-striped .table-condensed">
+        <table class="table table-bordered table-striped table-condensed">
             <tr>
-                <th class="">Cеть</th>
-                <td>{{ context.network.compressed }}</td>
+                <th class="field-label col-md-4">
+                    <label>Cеть</label></th>
+                <td class="col-md-8">{{ context.network.compressed }}</td>
             </tr>
             <tr>
-                <th>Количество доступных адресов</th>
-                <td>{{ context.network.num_addresses - 2}}</td>
+                <th class="field-label col-md-4">
+                    <label>Количество доступных адресов</label>
+                </th>
+                <td class="col-md-8">{{ context.network.num_addresses - 2}}</td>
             </tr>
             <tr>
-                <th>Количество необходимых адресов</th>
-                <td>{{ context.sizes | sum }}</td>
+                <th class="field-label col-md-4">
+                    <label>Количество необходимых адресов</label>
+                </th>
+                <td class="col-md-8">{{ context.sizes | sum }}</td>
             </tr>
             <tr>
-                <th>Количество использованных адресов</th>
-                <td>{{ context.dedicated }}</td>
+                <th class="field-label col-md-4">
+                    <label>Количество использованных адресов</label>
+                </th>
+                <td class="col-md-8">{{ context.dedicated }}</td>
             </tr>
             <tr>
-                <th>Количество свободных адресов</th>
-                <td>{{ context.network.num_addresses - context.dedicated }}</td>
+                <th class="field-label col-md-4">
+                    <label>Количество свободных адресов</label>
+                </th>
+                <td class="col-md-8">{{ context.network.num_addresses - context.dedicated }}</td>
             </tr>
         </table>
     </div>
@@ -42,23 +51,23 @@
     <div id="hosts" class="table-responsive">
         <table class="table table-bordered table-striped table-hover">
             <tr class="success">
-                <th>Размер</th>
-                <th>Выделенный размер</th>
-                <th>Адрес</th>
-                <th>Маска</th>
-                <th>Десятичная маска</th>
-                <th>Бродкаст</th>
-                <th>Диапазон адресов</th>
+                <th class="col-sm-1">Размер</th>
+                <th class="col-sm-1">Выделенный размер</th>
+                <th class="col-sm-2">Адрес</th>
+                <th class="col-sm-1">Маска</th>
+                <th class="col-sm-2">Десятичная маска</th>
+                <th class="col-sm-2">Бродкаст</th>
+                <th class="col-sm-3">Диапазон адресов</th>
             </tr>
             {% for size, network in context.networks %}
                 <tr>
-                    <td>{{ size }}</td>
-                    <td>{{ network.num_addresses - 2 }}</td>
-                    <td>{{ network.network_address }}</td>
-                    <td>{{ network.prefixlen }}</td>
-                    <td>{{ network.netmask }}</td>
-                    <td>{{ network.broadcast_address }}</td>
-                    <td>{{ network.network_address + 1 }} - {{ network.broadcast_address - 1 }}</td>
+                    <td class="col-sm-1">{{ size }}</td>
+                    <td class="col-sm-1">{{ network.num_addresses - 2 }}</td>
+                    <td class="col-sm-2">{{ network.network_address }}</td>
+                    <td class="col-sm-1">{{ network.prefixlen }}</td>
+                    <td class="col-sm-2">{{ network.netmask }}</td>
+                    <td class="col-sm-2">{{ network.broadcast_address }}</td>
+                    <td class="col-sm-3">{{ network.network_address + 1 }} - {{ network.broadcast_address - 1 }}</td>
                 </tr>
             {% endfor %}
         </table>
