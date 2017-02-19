@@ -1,8 +1,8 @@
 import unittest
-import ipaddress
-import utils
+from pprint import pprint
 
-from exceptions import *
+import utils
+from utils import ipaddress
 
 
 class TestUtils(unittest.TestCase):
@@ -38,4 +38,9 @@ class TestExtractForNetwork(unittest.TestCase):
         self.assertEqual(len(result), len(required_hosts))
 
         graph = utils.create_graph_of_network_relations(result, top_network)
+
+        network_for_125 = list(top_network.subnets())[0]
+
         self.assertEqual(type(graph), dict)
+        self.assertEqual(graph['text']['name'], top_network.compressed)
+        self.assertEqual(graph['children'][0]['text']['name'], network_for_125.compressed)

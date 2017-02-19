@@ -1,5 +1,7 @@
 import ipaddress
 
+from flask import json
+
 from exceptions import *
 
 
@@ -81,4 +83,17 @@ def create_graph_of_network_relations(result, network):
             "name": network.compressed,
         },
         'children': subnets,
+    }
+
+
+def ip_calculator(network, sizes):
+    network = string_2_network(network)
+    subnets = extract_for_network(string_2_network(network), sizes)
+    networks = zip(reversed(sorted(sizes)), subnets)
+    return {
+        'network': network,
+        'sizes': sizes,
+        'networks': networks,
+        'dedicated': sum(map(lambda x: x.num_addresses, subnets)),
+        'chart': json.dumps(create_graph_of_network_relations(subnets, network))
     }
