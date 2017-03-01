@@ -6,12 +6,28 @@ import utils
 
 
 app = Flask(__name__)
+CACHE_TIMEOUT = 2 * 60 * 60
 
 
 cache = SimpleCache()
 
 
+class cached(object):
+    def __init__(self, timeout=None):
+        self.timeout = timeout or CACHE_TIMEOUT
+
+    def __call__(self, f):
+        def decorator(*args, **kwargs):
+            response = cache.get(request.full_path)
+            if response is None:
+                response = f(*args, **kwargs)
+                cache.set(request.full_path, response, self.timeout)
+            return response
+        return decorator
+
+
 @app.route('/', methods=['GET'])
+@cached()
 def ipcalc():
     network = request.args.get('network')
     sizes_str = request.args.get('size')
@@ -19,11 +35,7 @@ def ipcalc():
         return render_template("index.html")
     sizes = json.loads(sizes_str)
     try:
-        get_hash = hash(network + sizes_str)
-        context = cache.get(get_hash)
-        if not context:
-            context = utils.ip_calculator(network, sizes)
-            cache.set(get_hash, context, timeout=5 * 60)
+        context = utils.ip_calculator(network, sizes)
         return render_template('result.html', context=context)
     except Exception as e:
         flash(str(e), 'error')
