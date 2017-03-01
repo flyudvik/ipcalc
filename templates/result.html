@@ -74,3 +74,43 @@
         </table>
     </div>
 {% endblock %}
+
+{% block binary_network_info %}
+    <h2>Бинарная репрезентация</h2>
+    {% set version  = context.network.version %}
+    <div id="network-info" class="table-responsive">
+        <table class="table table-bordered table-striped table-condensed">
+            <tr>
+                <th>
+                    =
+                </th>
+                <th>Десятичное представление</th>
+                <th>Двоичное представление</th>
+            </tr>
+            <tr>
+                <td class="field-label col-md-4">Адрес сети</td>
+                <td class="col-md-4">{{ context.network.network_address.compressed }}</td>
+                <td class="col-md-4"><code>{{ context.network.network_address | to_bit(version) }}</code></td>
+
+            </tr>
+            <tr>
+                <td class="field-label col-md-4">Маска
+                </td>
+                <td class="col-md-4">{{ context.network.netmask }}</td>
+                <td class="col-md-4"><code>{{ context.network.netmask | to_bit(version) }}</code></td>
+            </tr>
+            <tr>
+                <td class="field-label col-md-4">
+                    Маска хоста
+                </td>
+                <td class="col-md-4">{{ context.network.hostmask }}</td>
+                <td class="col-md-4"><code>{{ context.network.hostmask | to_bit(version) }}</code></td>
+            </tr>
+            <tr>
+                <td class="field-label col-md-4">Адрес бродкаста</td>
+                <td class="col-md-4">{{ context.network.netmask }}</td>
+                <td class="col-md-4"><code>{{ context.network.netmask | to_bit(version) }}</code></td>
+            </tr>
+        </table>
+    </div>
+{% endblock %}

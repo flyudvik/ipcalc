@@ -33,6 +33,18 @@ def ipcalc():
         })
 
 
+@app.template_filter('to_bit')
+def to_bit_filter(address, version=4):
+    if version == 4:
+        br = bin(int(address))[2:].zfill(32)
+        br = br[:8] + '.' + br[8:16] + '.' + br[16:24] + '.' + br[24:]
+        return br
+    elif version == 6:
+        return "IPv6 not supported yet"
+    else:
+        return f"Version {version} is not supported."
+
+
 app.secret_key = 'kjsdhflkjshflskjdfhlksdfhbvlksefvouhoue,flaedkfhdskf'
 if __name__ == '__main__':
     app.run()
