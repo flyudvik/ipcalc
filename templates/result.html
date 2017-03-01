@@ -14,30 +14,31 @@
         <table class="table table-bordered table-striped table-condensed">
             <tr>
                 <th class="field-label col-md-4">
-                    <label>Cеть</label></th>
+                    Cеть
+                </th>
                 <td class="col-md-8">{{ context.network.compressed }}</td>
             </tr>
             <tr>
                 <th class="field-label col-md-4">
-                    <label>Количество доступных адресов</label>
+                    Количество доступных адресов
                 </th>
                 <td class="col-md-8">{{ context.network.num_addresses - 2}}</td>
             </tr>
             <tr>
                 <th class="field-label col-md-4">
-                    <label>Количество необходимых адресов</label>
+                    Количество необходимых адресов
                 </th>
                 <td class="col-md-8">{{ context.sizes | sum }}</td>
             </tr>
             <tr>
                 <th class="field-label col-md-4">
-                    <label>Количество использованных адресов</label>
+                    Количество использованных адресов
                 </th>
                 <td class="col-md-8">{{ context.dedicated }}</td>
             </tr>
             <tr>
                 <th class="field-label col-md-4">
-                    <label>Количество свободных адресов</label>
+                    Количество свободных адресов
                 </th>
                 <td class="col-md-8">{{ context.network.num_addresses - context.dedicated }}</td>
             </tr>

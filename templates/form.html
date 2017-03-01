@@ -1,20 +1,20 @@
 {% macro network_form(network='192.168.0.0/24', sizes='[125, 30, 30]') %}
-    <form action="/" method="get" class="form-horizontal">
+    <form action="/" method="get" class="form">
         <div class="form-group">
-            <label for="network" class="col-sm-2 control-label">Network</label>
+            <label for="network" class="col-sm-2 control-label">Сеть</label>
             <div class="col-sm-10">
                 <input class="form-control" placeholder="192.168.0.0/24" type="text" name="network" value={{ network }}>
             </div>
         </div>
         <div class="form-group">
-            <label for="size" class="col-sm-2 control-label">size </label>
+            <label for="size" class="col-sm-2 control-label">Размеры</label>
             <div class="col-sm-10">
                 <input class="form-control" type="text" value="{{ sizes }}" name="size">
             </div>
         </div>
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
-                <button type="submit" class="btn btn-default">Submit</button>
+                <button type="submit" class="btn btn-primary btn-raised">Отправить</button>
             </div>
         </div>
     </form>
