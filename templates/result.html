@@ -8,7 +8,7 @@
 {% block alert %}{% endblock %}
 
 {% block network_info %}
-    <h2>Информация об исходной сети</h2>
+    {% block network_info_panel_head %}Информация об исходной сети{% endblock %}
 
     <div id="network-info" class="table-responsive">
         <table class="table table-bordered table-striped table-condensed">
@@ -47,7 +47,7 @@
 {% endblock %}
 
 {% block required_info %}
-    <h2>Информация о выделенных IP-адресов</h2>
+    {% block required_info_panel_head %}Информация о выделенных IP-адресов{% endblock %}
 
     <div id="hosts" class="table-responsive">
         <table class="table table-bordered table-striped table-hover">
@@ -76,7 +76,7 @@
 {% endblock %}
 
 {% block binary_network_info %}
-    <h2>Бинарная репрезентация</h2>
+    {% block binary_network_panel_head %}Бинарная репрезентация {% endblock %}
     {% set version  = context.network.version %}
     <div id="network-info" class="table-responsive">
         <table class="table table-bordered table-striped table-condensed">
