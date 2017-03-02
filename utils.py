@@ -70,8 +70,9 @@ def create_graph_of_network_relations(result, network):
             return None
         return {
             'text': {
-                'name': network.compressed
-            }
+                'name': network.compressed,
+            },
+            'HTMLclass': 'endpoint'
         }
     subnets = []
     for subnet in network.subnets():
