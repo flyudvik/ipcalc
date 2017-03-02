@@ -37,16 +37,26 @@
 <body style="padding-top: 70px;">
 {% include "navbar.html" %}
 
+{% import 'recent_requests.html' as recent %}
+
 <div id="content" class="container">
     <div class="row">
-        <div class="col-md-12">
-            <div class="panel panel-default">
+        <div class="{% if latest %}col-md-8 col-xs-12 col-lg-6{% else %}col-md-12{% endif %}">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        Network form
+                    </h3>
+                </div>
                 <div class="panel-body">
                     {% block form%}
                     {% endblock %}
                 </div>
             </div>
         </div>
+        {% if latest %}
+            {{ recent.latest_requests(latest) }}
+        {% endif %}
     </div>
 
     <div class="row">
