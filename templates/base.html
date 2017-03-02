@@ -62,13 +62,9 @@
     {% block content %}
     {% endblock %}
 </div>
-{% include "error-messages.html" %}
-{% include "google-analytics.html" %}
-<footer class="footer">
-    <div class="container">
-        <p class="text-muted">Developed by <a href="//woodehy.ru">Amy Woodehy</a></p>
-    </div>
-</footer>
 <a class="github-fork-ribbon" style="top: 50px; z-index: 1" href="https://github.com/amywoodehy/ipcalc" title="Fork me on GitHub">Fork me on GitHub</a>
+{% include "error-messages.html" %}
+{% include "footer.html" %}
+{% include "google-analytics.html" %}
 </body>
 </html>
