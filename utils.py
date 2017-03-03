@@ -20,15 +20,21 @@ def count_dedicated_ip(networks):
 def extract_for_network(network, required_hosts: list) -> list:
     if not required_hosts:
         raise WrongNumberOfHosts("Hosts list should contain "
-                         "at least 1 required network of hosts")
+                                 "at least 1 required network of hosts")
     if not network.num_addresses:
         raise WrongNetworkException("Subnets should be at least contain one network key")
-    if sum(map(close_to_power_two, required_hosts)) > network.num_addresses:
+    if sum(
+            map(
+                close_to_power_two, map(
+                    lambda x: x + 2, required_hosts
+                )
+            )
+    ) > network.num_addresses:
         raise WrongNumberOfHosts("sum of the required hosts "
-                         "should be less than "
-                         "maximal possible number"
-                         " of host for this network")
-    required_hosts = sorted(map(lambda x: x+2, required_hosts))
+                                 "should be less than "
+                                 "maximal possible number"
+                                 " of host for this network")
+    required_hosts = sorted(map(lambda x: x + 2, required_hosts))
 
     stack = list(network.subnets())
     stack.reverse()
