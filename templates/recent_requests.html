@@ -9,7 +9,7 @@
             <div class="panel-body">
                 <div class="btn-group-vertical btn-block">
                     {% for item in latest %}
-                        <a href="{{ item.path }}" class="btn btn-block btn-raised btn-default">
+                        <a href="{{ item.path }}" class="btn btn-block btn-raised btn-default" style="overflow: hidden;">
                             {{ item.time | natural_time}} - {{ item.network }}: {{ item.sizes }}
                         </a>
                     {% endfor %}
