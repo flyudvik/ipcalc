@@ -10,7 +10,7 @@
                 <div class="btn-group-vertical btn-block">
                     {% for item in latest %}
                         <a href="{{ item.path }}" class="btn btn-block btn-raised btn-default">
-                            {{ item.time }} - {{ item.network }}: {{ item.sizes }}
+                            {{ item.time | natural_time}} - {{ item.network }}: {{ item.sizes }}
                         </a>
                     {% endfor %}
                 </div>

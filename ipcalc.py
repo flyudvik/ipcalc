@@ -3,6 +3,7 @@ from flask import Flask, json, render_template, request
 from flask import flash, session
 from werkzeug.contrib.cache import SimpleCache
 from datetime import datetime
+import humanize
 
 import utils
 
@@ -39,7 +40,7 @@ def ipcalc():
     if not latest:
         latest = collections.deque(maxlen=5)
     latest.append({
-        'time': datetime.now().strftime("%H:%M:%S"),
+        'time': datetime.now(),
         'path': request.full_path,
         'network': network,
         'sizes': sizes
@@ -66,6 +67,11 @@ def to_bit_filter(address, version=4):
         return "IPv6 not supported yet"
     else:
         return f"Version {version} is not supported."
+
+
+@app.template_filter()
+def natural_time(dt):
+    return humanize.naturaltime(datetime.now() - dt)
 
 
 app.secret_key = 'kjsdhflkjshflskjdfhlksdfhbvlksefvouhoue,flaedkfhdskf'
