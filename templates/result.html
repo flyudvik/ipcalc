@@ -94,26 +94,31 @@
                 <th>Двоичное представление</th>
             </tr>
             <tr>
-                <td class="field-label col-md-4">Адрес сети</td>
+                <th class="field-label col-md-4">
+                    Адрес сети
+                </th>
                 <td class="col-md-4">{{ context.network.network_address.compressed }}</td>
                 <td class="col-md-4"><code>{{ context.network.network_address | to_bit(version) }}</code></td>
 
             </tr>
             <tr>
-                <td class="field-label col-md-4">Маска
-                </td>
+                <th class="field-label col-md-4">
+                    Маска
+                </th>
                 <td class="col-md-4">{{ context.network.netmask }}</td>
                 <td class="col-md-4"><code>{{ context.network.netmask | to_bit(version) }}</code></td>
             </tr>
             <tr>
-                <td class="field-label col-md-4">
+                <th class="field-label col-md-4">
                     Маска хоста
-                </td>
+                </th>
                 <td class="col-md-4">{{ context.network.hostmask }}</td>
                 <td class="col-md-4"><code>{{ context.network.hostmask | to_bit(version) }}</code></td>
             </tr>
             <tr>
-                <td class="field-label col-md-4">Адрес бродкаста</td>
+                <th class="field-label col-md-4">
+                    Адрес бродкаста
+                </th>
                 <td class="col-md-4">{{ context.network.netmask }}</td>
                 <td class="col-md-4"><code>{{ context.network.netmask | to_bit(version) }}</code></td>
             </tr>
