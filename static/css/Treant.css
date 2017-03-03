@@ -55,7 +55,8 @@
     border: none;
 }
 .Treant .node.collapsed {
-    background-color: #DEF82D;
+    background-color: #009688;
+    color: white;
 }
 .Treant .node.collapsed .collapse-switch {
     background: none;
