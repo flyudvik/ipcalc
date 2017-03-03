@@ -1,6 +1,6 @@
 import collections
 from flask import Flask, json, render_template, request
-from flask import flash
+from flask import flash, session
 from werkzeug.contrib.cache import SimpleCache
 from datetime import datetime
 
@@ -29,11 +29,10 @@ class cached(object):
 
 
 @app.route('/', methods=['GET'])
-@cached()
 def ipcalc():
     network = request.args.get('network')
     sizes_str = request.args.get('size')
-    latest = cache.get('latest')
+    latest = collections.deque(session.get('latest', []), maxlen=5)
     if not network or not sizes_str:
         return render_template("index.html", latest=latest)
     sizes = json.loads(sizes_str)
@@ -45,7 +44,7 @@ def ipcalc():
         'network': network,
         'sizes': sizes
     })
-    cache.set('latest', latest, CACHE_TIMEOUT)
+    session['latest'] = list(latest)
     try:
         context = utils.ip_calculator(network, sizes)
         return render_template('result.html', context=context, latest=latest)
