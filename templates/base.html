@@ -32,48 +32,15 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.10/js/ripples.min.js" integrity="sha256-TY/EO/++Ug/P+fSBjaqlmtuphCBKwlP7TOnS+SGnN8g=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.2.7/raphael.min.js" integrity="sha256-67By+NpOtm9ka1R6xpUefeGOY8kWWHHRAKlvaTJ7ONI=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/treant-js/1.0/Treant.min.js" integrity="sha256-uJM4faHad7tdChm9dmdJ6eBvP36+BUj0IUzvIYvmgTo=" crossorigin="anonymous"></script>
-
 </head>
-<body style="padding-top: 70px;">
+
+<body>
 {% include "navbar.html" %}
 
-{% import 'recent_requests.html' as recent %}
-
 <div id="content" class="container">
-    <div class="row">
-        <div class="{% if latest %}col-md-8 col-xs-12 col-lg-6{% else %}col-md-12{% endif %}">
-            <div class="panel panel-primary">
-                <div class="panel-heading">
-                    <h3 class="panel-title">
-                        Network form
-                    </h3>
-                </div>
-                <div class="panel-body">
-                    {% block form%}
-                    {% endblock %}
-                </div>
-            </div>
-        </div>
-        {% if latest %}
-            {{ recent.latest_requests(latest) }}
-        {% endif %}
-    </div>
-
-    <div class="row">
-        <div class="col-md-12">
-            {% block alert %}
-                <div class="alert alert-info">
-
-                </div>
-            {% endblock %}
-        </div>
-    </div>
-
-    {% block content %}
-    {% endblock %}
-
-    {% include "error-messages.html" %}
+    {% block content %}{% endblock %}
 </div>
+
 <a class="github-fork-ribbon" style="top: 50px; z-index: 1" href="https://github.com/amywoodehy/ipcalc" title="Fork me on GitHub">Fork me on GitHub</a>
 {% include "footer.html" %}
 {% include "google-analytics.html" %}

@@ -1,0 +1,49 @@
+{% extends 'report-panel.html' %}
+
+{% block panel_head %}
+    Бинарная репрезентация
+{% endblock %}
+
+{% block panel_body %}
+    {% set version  = context.network.version %}
+    <div id="network-info" class="table-responsive">
+        <table class="table table-bordered table-striped table-condensed">
+            <tr>
+                <th>
+                    =
+                </th>
+                <th>Десятичное представление</th>
+                <th>Двоичное представление</th>
+            </tr>
+            <tr>
+                <th class="field-label col-md-4">
+                    Адрес сети
+                </th>
+                <td class="col-md-4">{{ context.network.network_address.compressed }}</td>
+                <td class="col-md-4"><code>{{ context.network.network_address | to_bit(version) }}</code></td>
+
+            </tr>
+            <tr>
+                <th class="field-label col-md-4">
+                    Маска
+                </th>
+                <td class="col-md-4">{{ context.network.netmask }}</td>
+                <td class="col-md-4"><code>{{ context.network.netmask | to_bit(version) }}</code></td>
+            </tr>
+            <tr>
+                <th class="field-label col-md-4">
+                    Маска хоста
+                </th>
+                <td class="col-md-4">{{ context.network.hostmask }}</td>
+                <td class="col-md-4"><code>{{ context.network.hostmask | to_bit(version) }}</code></td>
+            </tr>
+            <tr>
+                <th class="field-label col-md-4">
+                    Адрес бродкаста
+                </th>
+                <td class="col-md-4">{{ context.network.netmask }}</td>
+                <td class="col-md-4"><code>{{ context.network.netmask | to_bit(version) }}</code></td>
+            </tr>
+        </table>
+    </div>
+{% endblock %}

@@ -1,0 +1,10 @@
+{% extends 'report-panel.html' %}
+
+{% block panel_head %}
+    Граф распределения сети
+{% endblock %}
+
+{% block panel_body %}
+    <div id="chart"></div>
+    {% include "simple_chart.html" %}
+{% endblock %}

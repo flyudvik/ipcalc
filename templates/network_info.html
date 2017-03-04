@@ -1,0 +1,48 @@
+{% extends'report-panel.html' %}
+{% block panel_head %}
+    Информация об исходной сети
+{% endblock %}
+{% block panel_body %}
+    <div id="network-info" class="table-responsive">
+        <table class="table table-bordered table-striped table-condensed">
+            <tr>
+                <th class="field-label col-md-4">
+                    Cеть
+                </th>
+                <td class="col-md-8">{{ context.network.compressed }}</td>
+            </tr>
+            <tr>
+                <th class="field-label col-md-4">
+                    Количество доступных адресов
+                </th>
+                <td class="col-md-8">{{ context.network.num_addresses }}</td>
+            </tr>
+            <tr>
+                <th class="field-label col-md-4">
+                    Количество необходимых адресов
+                </th>
+                <td class="col-md-8">{{ context.sizes | sum }}</td>
+            </tr>
+            <tr>
+                <th class="field-label col-md-4">
+                    Количество использованных адресов
+                </th>
+                <td class="col-md-8">{{ context.dedicated }}</td>
+            </tr>
+            <tr>
+                <th class="field-label col-md-4">
+                    Количество свободных адресов
+                </th>
+                <td class="col-md-8">{{ context.network.num_addresses - context.dedicated }}</td>
+            </tr>
+            <tr>
+                <th class="field-label col-md-4">
+                    Коэфициент оптимального использования
+                </th>
+                <td class="col-md-8">
+                    {{ 1 - (context.network.num_addresses - context.dedicated) / context.network.num_addresses }}
+                </td>
+            </tr>
+        </table>
+    </div>
+{% endblock %}

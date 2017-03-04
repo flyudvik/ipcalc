@@ -1,19 +1,24 @@
-{% extends 'subnetting.html' %}
-{% import 'form.html' as my_form %}
+{% extends 'base.html' %}
 
-{% block form %}
-    {% if context %}
-        {% if context.network and context.sizes %}
-            {{ my_form.network_form(context.network, context.sizes) }}
-        {% endif %}
-    {% else %}
-        {{ my_form.network_form() }}
+{% block content %}
+    <div class="row">
+        {% include 'network_input_form.html' %}
+        {% include 'recent_requests.html' %}
+    </div>
+    {% include 'messages.html' %}
+
+    {% if calculated %}
+        <div class="row">
+            {% include 'network_info.html' %}
+        </div>
+        <div class="row">
+            {% include 'network_subnets.html' %}
+        </div>
+        <div class="row">
+            {% include 'network_binary.html' %}
+        </div>
+        <div class="row">
+            {% include 'network_subnet_graph.html' %}
+        </div>
     {% endif %}
 {% endblock %}
-
-{% block alert %}
-    <div class="alert alert-info">
-        To continue enter some information in the form above
-    </div>
-{% endblock %}
-{% block content %}{% endblock %}

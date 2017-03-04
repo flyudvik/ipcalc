@@ -1,0 +1,32 @@
+{% extends'report-panel.html' %}
+
+{% block panel_head %}
+    Информация о выделенных IP-адресов
+{% endblock %}
+
+{% block panel_body %}
+    <div id="hosts" class="table-responsive">
+        <table class="table table-bordered table-striped">
+            <tr class="success">
+                <th class="col-sm-1">Размер</th>
+                <th class="col-sm-1">Выделенный размер</th>
+                <th class="col-sm-2">Адрес</th>
+                <th class="col-sm-1">Маска</th>
+                <th class="col-sm-2">Десятичная маска</th>
+                <th class="col-sm-2">Бродкаст</th>
+                <th class="col-sm-3">Диапазон адресов</th>
+            </tr>
+            {% for size, network in context.networks %}
+                <tr>
+                    <td class="col-sm-1">{{ size }}</td>
+                    <td class="col-sm-1">{{ network.num_addresses - 2 }}</td>
+                    <td class="col-sm-2">{{ network.network_address }}</td>
+                    <td class="col-sm-1">{{ network.prefixlen }}</td>
+                    <td class="col-sm-2">{{ network.netmask }}</td>
+                    <td class="col-sm-2">{{ network.broadcast_address }}</td>
+                    <td class="col-sm-3">{{ network.network_address + 1 }} - {{ network.broadcast_address - 1 }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+{% endblock %}

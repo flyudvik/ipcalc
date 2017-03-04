@@ -35,6 +35,7 @@ def ipcalc():
     sizes_str = request.args.get('size')
     latest = collections.deque(session.get('latest', []), maxlen=5)
     if not network or not sizes_str:
+        flash('Enter your network and list of networks', 'info')
         return render_template("index.html", latest=latest)
     sizes = json.loads(sizes_str)
 
@@ -52,7 +53,7 @@ def ipcalc():
             sizes = sizes[:20]
             raise Exception("Your browser probably cannot handle this")
         context = utils.ip_calculator(network, sizes)
-        return render_template('result.html', context=context, latest=latest)
+        return render_template('index.html', context=context, latest=latest, calculated=True)
     except Exception as e:
         flash(str(e), 'error')
         return render_template("index.html", context={
