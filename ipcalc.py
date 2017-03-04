@@ -62,6 +62,11 @@ def ipcalc():
         }, latest=latest)
 
 
+@app.route('/about/', methods=['GET'])
+def discus():
+    return render_template('discus.html')
+
+
 @app.template_filter('to_bit')
 def to_bit_filter(address, version=4):
     if version == 4:
