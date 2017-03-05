@@ -110,13 +110,13 @@ def ip_calculator(network, sizes):
 
 def parse_sizes_str(sizes_str: str) -> list:
     sizes_str = sizes_str.strip('[]')
-    delimiters = [", ", ",", "; ", ";", " "]
+    delimiters = [", ", ",", "; ", ";", ". ", ".", " "]
     regex_pattern = '|'.join(map(re.escape, delimiters))
     s = re.split(regex_pattern, sizes_str)
     result = []
     for item in s:
         try:
-            result.append(int(item))
+            result.append(abs(int(item)))
         except ValueError:
             pass
     return result
