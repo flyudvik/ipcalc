@@ -1,7 +1,7 @@
 import collections
 from flask import Flask, json, render_template, request
 from flask import flash, session
-from werkzeug.contrib.cache import SimpleCache
+from flask_cache import Cache
 from datetime import datetime
 import humanize
 
@@ -12,21 +12,7 @@ app = Flask(__name__)
 CACHE_TIMEOUT = 2 * 60 * 60
 
 
-cache = SimpleCache()
-
-
-class cached(object):
-    def __init__(self, timeout=None):
-        self.timeout = timeout or CACHE_TIMEOUT
-
-    def __call__(self, f):
-        def decorator(*args, **kwargs):
-            response = cache.get(request.full_path)
-            if response is None:
-                response = f(*args, **kwargs)
-                cache.set(request.full_path, response, self.timeout)
-            return response
-        return decorator
+cache = Cache(app, config={'CACHE_TYPE': 'simple'})
 
 
 @app.route('/', methods=['GET'])
@@ -51,7 +37,7 @@ def ipcalc():
         if len(sizes) >= 20:
             sizes = sizes[:20]
             raise Exception("Your browser probably cannot handle this")
-        context = utils.ip_calculator(network, sizes)
+        context = get_context(network, sizes)
         return render_template('index.html', context=context, latest=latest, calculated=True)
     except Exception as e:
         flash(str(e), 'error')
@@ -61,7 +47,13 @@ def ipcalc():
         }, latest=latest)
 
 
+@cache.memoize(timeout=600)
+def get_context(network, sizes):
+    return utils.ip_calculator(network, sizes)
+
+
 @app.route('/about/', methods=['GET'])
+@cache.cached(timeout=999999)
 def discus():
     return render_template('discus.html')
 
