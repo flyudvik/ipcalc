@@ -1,3 +1,5 @@
+import re
+
 import ipaddress
 
 from flask import json
@@ -104,3 +106,17 @@ def ip_calculator(network, sizes):
         'dedicated': sum(map(lambda x: x.num_addresses, subnets)),
         'chart': json.dumps(create_graph_of_network_relations(subnets, network))
     }
+
+
+def parse_sizes_str(sizes_str: str) -> list:
+    sizes_str = sizes_str.strip('[]')
+    delimiters = [", ", ",", "; ", ";", " "]
+    regex_pattern = '|'.join(map(re.escape, delimiters))
+    s = re.split(regex_pattern, sizes_str)
+    result = []
+    for item in s:
+        try:
+            result.append(int(item))
+        except ValueError:
+            pass
+    return result

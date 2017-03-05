@@ -34,11 +34,10 @@ def ipcalc():
     network = request.args.get('network')
     sizes_str = request.args.get('size')
     latest = collections.deque(session.get('latest', []), maxlen=5)
-    if not network or not sizes_str:
+    sizes = utils.parse_sizes_str(sizes_str) if sizes_str else []
+    if not network or not sizes:
         flash('Enter your network and list of networks', 'info')
         return render_template("index.html", latest=latest)
-    sizes = json.loads(sizes_str)
-
     if not latest:
         latest = collections.deque(maxlen=5)
     latest.append({

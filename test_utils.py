@@ -1,6 +1,8 @@
 import unittest
 from pprint import pprint
 
+from flask import json
+
 import utils
 from utils import ipaddress
 
@@ -44,3 +46,62 @@ class TestExtractForNetwork(unittest.TestCase):
         self.assertEqual(type(graph), dict)
         self.assertEqual(graph['text']['name'], top_network.compressed)
         self.assertEqual(graph['children'][0]['text']['name'], network_for_125.compressed)
+
+
+class TestParseSizesStr(unittest.TestCase):
+    def test_json_input(self):
+        payload = [123, 34, 56, 78]
+        json_payload = json.dumps(payload)
+        self.assertEqual(
+            payload,
+            utils.parse_sizes_str(json_payload)
+        )
+
+    def test_space_separated_input(self):
+        payload = [123, 34, 56, 78]
+        space_payload = ' '.join(map(str, payload))
+        self.assertEqual(payload, utils.parse_sizes_str(space_payload))
+
+    def test_comma_separated_input(self):
+        payload = [123, 34, 56, 78]
+        space_payload = ','.join(map(str, payload))
+        self.assertEqual(payload, utils.parse_sizes_str(space_payload))
+
+    def test_really_idiotic_way_to_separate_input(self):
+        payload = [123, 34, 56, 78]
+        idiot_payload = '123, 34 56;78'
+        self.assertEqual(payload, utils.parse_sizes_str(idiot_payload))
+
+    def test_single_input(self):
+        payload = [123]
+        payload_as_str = '123'
+        self.assertEqual(payload, utils.parse_sizes_str(payload_as_str))
+
+    def test_single_with_comma_input(self):
+        payload = [123]
+        payload_as_str = '123,'
+        self.assertEqual(payload, utils.parse_sizes_str(payload_as_str))
+
+    def test_single_with_space_input(self):
+        payload = [123]
+        payload_as_str = '123 '
+        self.assertEqual(payload, utils.parse_sizes_str(payload_as_str))
+
+    def test_single_json_input(self):
+        payload = [123]
+        payload_as_str = '[123]'
+        self.assertEqual(payload, utils.parse_sizes_str(payload_as_str))
+
+    def test_null_input(self):
+        self.assertEqual([], utils.parse_sizes_str(''))
+
+    def test_null_json_input(self):
+        self.assertEqual([], utils.parse_sizes_str('[]'))
+
+    def test_null_separator_input(self):
+        self.assertEqual([], utils.parse_sizes_str(',;;;,, ;, ;, ;,; ;'))
+
+    def test_multiple_consequence_separators(self):
+        payload = [123, 34, 45]
+        payload_as_str = '123,,,;34; 45; '
+        self.assertEqual(payload, utils.parse_sizes_str(payload_as_str))
