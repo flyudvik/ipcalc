@@ -33,6 +33,12 @@ class TestExtractForNetwork(unittest.TestCase):
         result = utils.extract_for_network(network, required_hosts)
         self.assertEqual(len(result), len(required_hosts))
 
+    def test_success_for_single_network(self):
+        network = ipaddress.ip_network('192.168.0.0/24')
+        required_hosts = [250]
+        result = utils.extract_for_network(network, required_hosts)
+        self.assertEqual(len(result), len(required_hosts))
+
     def test_create_graph_of_network_relations(self):
         top_network = ipaddress.ip_network("192.168.0.0/24")
         required_hosts = [125, 36, 30]

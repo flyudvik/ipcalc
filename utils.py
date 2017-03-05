@@ -38,7 +38,7 @@ def extract_for_network(network, required_hosts: list) -> list:
                                  " of host for this network")
     required_hosts = sorted(map(lambda x: x + 2, required_hosts))
 
-    stack = list(network.subnets())
+    stack = [network]
     stack.reverse()
 
     result = []
