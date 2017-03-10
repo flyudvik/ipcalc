@@ -41,7 +41,7 @@
                 <th class="field-label col-md-4">
                     Адрес бродкаста
                 </th>
-                <td class="col-md-4">{{ context.network.netmask }}</td>
+                <td class="col-md-4">{{ context.network.broadcast_address }}</td>
                 <td class="col-md-4"><code>{{ context.network.broadcast_address | to_bit(version) }}</code></td>
             </tr>
         </table>
