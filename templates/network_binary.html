@@ -42,7 +42,7 @@
                     Адрес бродкаста
                 </th>
                 <td class="col-md-4">{{ context.network.netmask }}</td>
-                <td class="col-md-4"><code>{{ context.network.netmask | to_bit(version) }}</code></td>
+                <td class="col-md-4"><code>{{ context.network.broadcast | to_bit(version) }}</code></td>
             </tr>
         </table>
     </div>
